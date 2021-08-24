@@ -15,11 +15,11 @@ class HomeStore extends NotifierStore<Exception, BluetoothDeviceState> {
     // [27, 26, 0, 229, 7, 4, 29, 16, 28, 54, 121, 66, 111, 176, 248, 0, 8],
   ];
   List<List<int>> glucoseContextList = [
-    // [2, 22, 0, 1],
-    // [2, 23, 0, 2],
-    // [2, 24, 0, 2],
-    // [2, 26, 0, 1],
-    // [2, 25, 0, 1]
+    [2, 22, 0, 1],
+    [2, 23, 0, 2],
+    [2, 24, 0, 2],
+    [2, 26, 0, 1],
+    [2, 25, 0, 1]
   ];
 
   // List<List<int>> response = []; //resposta da medida de glicose
@@ -84,20 +84,24 @@ class HomeStore extends NotifierStore<Exception, BluetoothDeviceState> {
   }
 
   void convertData(
-      List<List<int>> response, List<List<int>> glucoseContextList) {
-    List<int> glucoseContext = [];
+    List<List<int>> response,
+    // List<List<int>> glucoseContextList,
+  ) {
+    // List<int> glucoseContext = [];
     if (data.length != response.length) {
       response.forEach(
         (element) async {
-          if (getFlag(element[0], 4) == 1) {
-            glucoseContext = glucoseContextList
-                .firstWhere((context) => element[1] == context[1]);
-          }
+          // if (getFlag(element[0], 4) == 1) {
+          //   glucoseContext = glucoseContextList
+          //       .firstWhere((context) => element[1] == context[1]);
+          // }
 
           data.add(GlucoseModel.fromListInt(
-              glucose: element, context: glucoseContext));
+            glucose: element,
+            // context: glucoseContext,
+          ));
 
-          glucoseContext = [];
+          // glucoseContext = [];
         },
       );
     }
@@ -195,6 +199,9 @@ class HomeStore extends NotifierStore<Exception, BluetoothDeviceState> {
             .firstWhere((service) => service.uuid.toString().contains('1808'));
         glucoseMeasurement = glucoseService.characteristics
             .firstWhere((element) => element.uuid.toString().contains('2a18'));
+        racp = glucoseService.characteristics
+            .firstWhere((element) => element.uuid.toString().contains('2a52'));
+
         try {
           log('Iniciando configuracão da caracteristica 2a18');
           await glucoseMeasurement.setNotifyValue(true);
@@ -206,6 +213,15 @@ class HomeStore extends NotifierStore<Exception, BluetoothDeviceState> {
               log('Evento ouvindo caracteristica');
             },
           );
+          log('Notificação configurada com sucesso!');
+        } catch (e) {
+          log('Erro ao configurar a notificação');
+        }
+        try {
+          log('Iniciando configuracão da caracteristica 2a52');
+          await racp.setNotifyValue(true);
+          await racp.write([1, 3, 2, 24, 0]);
+
           log('Notificação configurada com sucesso!');
         } catch (e) {
           log('Erro ao configurar a notificação');
@@ -228,18 +244,7 @@ class HomeStore extends NotifierStore<Exception, BluetoothDeviceState> {
         } catch (e) {
           log('Erro ao configurar a notificação');
         }
-        //notificando o RACP
-        racp = glucoseService.characteristics
-            .firstWhere((element) => element.uuid.toString().contains('2a52'));
-        try {
-          log('Iniciando configuracão da caracteristica 2a52');
-          await racp.setNotifyValue(true);
-          await racp.write([1, 1]);
-
-          log('Notificação configurada com sucesso!');
-        } catch (e) {
-          log('Erro ao configurar a notificação');
-        }
+        // notificando o RACP
       },
     );
   }

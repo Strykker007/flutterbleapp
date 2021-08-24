@@ -29,7 +29,10 @@ class DevicePageState extends State<DevicePage> {
         actions: [
           IconButton(
             onPressed: () {
-              store.convertData(store.response, store.glucoseContextList);
+              store.convertData(
+                store.response,
+                // store.glucoseContextList,
+              );
               Navigator.of(context).pushNamed(
                 '/glucose',
               );
@@ -165,8 +168,10 @@ class DevicePageState extends State<DevicePage> {
 
                                     await store.obtainData(r.device).then(
                                       (value) {
-                                        store.convertData(store.response,
-                                            store.glucoseContextList);
+                                        store.convertData(
+                                          store.response,
+                                          // store.glucoseContextList,
+                                        );
                                         Navigator.pushNamed(
                                           context,
                                           '/glucose',

@@ -7,7 +7,7 @@ class GlucoseModel {
   late int measurement;
   late DateTime data;
   late int id;
-  GlucoseContext? glucoseContext;
+  // GlucoseContext? glucoseContext;
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,12 +17,11 @@ class GlucoseModel {
     };
   }
 
-  GlucoseModel.fromListInt(
-      {required List<int> glucose, required List<int> context}) {
+  GlucoseModel.fromListInt({required List<int> glucose}) {
     id = glucose[1];
     measurement = glucose[12];
     data = _extractDate(glucose);
-    glucoseContext = GlucoseContext.fromListInt(context);
+    // glucoseContext = GlucoseContext?.fromListInt(context);
   }
 
   DateTime _extractDate(List<int> glucose) {

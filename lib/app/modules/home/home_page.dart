@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -20,7 +22,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   @override
   Widget build(BuildContext context) {
     try {
-      store.convertData(store.response, store.glucoseContextList);
+      store.convertData(
+        store.response,
+        // store.glucoseContextList,
+      );
     } catch (e) {
       log('deu ruim');
     }
@@ -37,7 +42,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         actions: [
           IconButton(
             onPressed: () {
-              // store.convertData(store.response, store.glucoseContextList);
+              store.convertData(
+                store.response,
+                // store.glucoseContextList,
+              );
 
               Navigator.of(context).pushNamed(
                 '/glucose',
@@ -52,12 +60,13 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
             onPressed: () async {
               // store.convertData(store.response, store.glucoseContextList);
 
-              Navigator.of(context).pushNamed(
-                '/devices',
-              );
-              // int i = 2020 - 1792;
+              // Navigator.of(context).pushNamed(
+              //   '/devices',
+              // );
+              // int i = 2021 - 1792;
               // print(i.toRadixString(16));
-              print(store.response);
+              // print(store.response);
+              print(utf8.encode('dc070605100731'));
             },
             icon: Icon(
               Icons.bluetooth_connected,

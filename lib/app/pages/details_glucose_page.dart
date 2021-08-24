@@ -166,26 +166,26 @@ class DetailsGlucosePageState extends State<DetailsGlucosePage> {
                         ),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Contexto:'),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text('Refeição: ' +
-                              widget.glucose.glucoseContext!.presentFood),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text('Carboidrato presente: ' +
-                              widget
-                                  .glucose.glucoseContext!.presentCarbohidrate),
-                        ],
-                      ),
-                    )
+                    // Container(
+                    //   margin: EdgeInsets.all(10),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text('Contexto:'),
+                    //       SizedBox(
+                    //         height: 5,
+                    //       ),
+                    //       Text('Refeição: ' +
+                    //           widget.glucose.glucoseContext!.presentFood),
+                    //       SizedBox(
+                    //         height: 5,
+                    //       ),
+                    //       Text('Carboidrato presente: ' +
+                    //           widget
+                    //               .glucose.glucoseContext!.presentCarbohidrate),
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
               ),
